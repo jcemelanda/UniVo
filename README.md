@@ -28,3 +28,9 @@ Ele oferece recursos de **símbolos, texto e voz** para apoiar a comunicação, 
   - 🌐 Web  
 
 > Graças ao BeeWare, o UniVo nasce **multiplataforma de verdade**, com o mesmo código rodando em todos os sistemas.
+
+UniVo is a AAC system completely free and open source to provide people wotj tools to inclusive communication
+
+.. _`Briefcase`: https://briefcase.readthedocs.io/
+.. _`The BeeWare Project`: https://beeware.org/
+.. _`becoming a financial member of BeeWare`: https://beeware.org/contributing/membership
