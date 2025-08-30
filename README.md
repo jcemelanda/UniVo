@@ -1,35 +1,35 @@
-# UniVo - Comunicação Aumentativa e Alternativa (CAA)
+# UniVo - Augmentative and Alternative Communication (AAC)
 
-**UniVo** é um sistema de **Comunicação Aumentativa e Alternativa (CAA)**, totalmente **gratuito**, **livre** e **open source**.  
-Nosso objetivo é garantir que todas as pessoas tenham acesso a ferramentas de comunicação inclusivas, sem barreiras financeiras ou tecnológicas.  
+**UniVo** is a system for **Augmentative and Alternative Communication (AAC)**, completely **free**, **open**, and **open source**.  
+Our goal is to ensure that everyone has access to inclusive communication tools, without financial or technological barriers.  
 
-> 💡 **Comunicação é um direito, não um privilégio.**
-
----
-
-## 🌍 O que é o UniVo?
-
-O UniVo é um aplicativo pensado para:  
-- Pessoas com deficiência de fala ou dificuldades de comunicação.  
-- Famílias, cuidadores e profissionais da saúde.  
-- Escolas e espaços inclusivos que precisam de recursos acessíveis.  
-
-Ele oferece recursos de **símbolos, texto e voz** para apoiar a comunicação, de forma simples e acessível.  
+> 💡 **Communication is a right, not a privilege.**
 
 ---
 
-## 🛠️ Tecnologias
+## 🌍 What is UniVo?
 
-- **Linguagem/Framework**: [Python](https://www.python.org/) + [BeeWare](https://beeware.org/)  
-- **Banco de Dados**: SQLite (local e portátil, sem necessidade de servidor)  
-- **Plataformas alvo**:  
+UniVo is an app designed for:  
+- People with speech disabilities or communication difficulties.  
+- Families, caregivers, and healthcare professionals.  
+- Schools and inclusive spaces that need accessible resources.  
+
+It offers **symbols, text, and voice** features to support communication in a simple and accessible way.  
+
+---
+
+## 🛠️ Technologies
+
+- **Language/Framework**: [Python](https://www.python.org/) + [BeeWare](https://beeware.org/)  
+- **Database**: SQLite (local and portable, no server required)  
+- **Target Platforms**:  
   - 🖥️ Desktop: Windows, Linux, macOS  
   - 📱 Mobile: Android, iOS  
   - 🌐 Web  
 
-> Graças ao BeeWare, o UniVo nasce **multiplataforma de verdade**, com o mesmo código rodando em todos os sistemas.
+> Thanks to BeeWare, UniVo is truly **multiplatform**, with the same code running on all systems.
 
-UniVo is a AAC system completely free and open source to provide people wotj tools to inclusive communication
+UniVo is an AAC system, completely free and open source, to provide people with tools for inclusive communication.
 
 .. _`Briefcase`: https://briefcase.readthedocs.io/
 .. _`The BeeWare Project`: https://beeware.org/
