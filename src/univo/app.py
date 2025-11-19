@@ -14,14 +14,19 @@ class UniVo(toga.App):
 
         # Botões fixos "Sim" e "Não" no topo
         self.pictogram_dir = os.path.join(os.path.dirname(__file__), "resources/pictograms")
-        yes_no_box = toga.Box(direction=ROW, style=Pack(padding_bottom=10))
+        yes_no_box = toga.Box(
+            direction=ROW,
+            flex=1,
+            style=Pack(padding_bottom=10))
         yes_btn = toga.Button(
-            id="yes", 
+            id="yes",
+            flex=1, 
             icon=os.path.abspath(os.path.join(self.pictogram_dir, "base/yes.png")), 
             style=Pack(width=100, padding_right=10), 
             on_press=self.add_word)
         no_btn = toga.Button(
-            id='no', 
+            id='no',
+            flex=1,  
             icon=os.path.abspath(os.path.join(self.pictogram_dir, "base/no.png")), 
             style=Pack(width=100), 
             on_press=self.add_word)
@@ -31,25 +36,33 @@ class UniVo(toga.App):
 
         # Painel de frase construída
         self.phrase_label = toga.Label("Sentence:", style=Pack(font_size=16, padding_bottom=10))
-        self.phrase_box = toga.Box(direction=ROW, style=Pack(padding_bottom=10))
+        self.phrase_box = toga.Box(direction=ROW, flex=1, style=Pack(padding_bottom=10))
         main_box.add(self.phrase_label)
         main_box.add(self.phrase_box)
 
         # Categorias
         categories = get_categories()
-        category_box = toga.Box(direction=ROW, style=Pack(padding_bottom=10))
+        category_box = toga.Box(direction=ROW, flex=2, style=Pack(padding_bottom=10))
         for cat in categories:
             icon_path = os.path.abspath(os.path.join(self.pictogram_dir, f"{cat}/{cat}.png"))
-            btn = toga.Button(id=cat, icon=icon_path, on_press=self.show_category)
+            btn = toga.Button(
+                id=cat, 
+                flex=1, 
+                icon=icon_path, 
+                on_press=self.show_category)
             category_box.add(btn)
         main_box.add(category_box)
 
         # Área de símbolos/frases
-        self.symbols_box = toga.Box(direction=ROW, style=Pack(padding_bottom=10))
+        self.symbols_box = toga.Box(direction=ROW, flex=2, style=Pack(padding_bottom=10))
         main_box.add(self.symbols_box)
 
         # Botão para falar a frase
-        speak_btn = toga.Button("Speak", on_press=self.speak_phrase)
+        speak_btn = toga.Button(
+            id="speak", 
+            flex=1,
+            icon=os.path.abspath(os.path.join(self.pictogram_dir, "base/speaker.png")), 
+            on_press=self.speak_phrase)
         main_box.add(speak_btn)
 
         self.main_window = toga.MainWindow(title=self.formal_name)
@@ -70,6 +83,7 @@ class UniVo(toga.App):
             icon_path = os.path.abspath(os.path.join(self.pictogram_dir, widget.id, icon_file))
             btn = toga.Button(
                 id=id_,
+                flex=1, 
                 icon=icon_path,
                 on_press=self.add_word,
                 style=Pack(padding_right=5)
