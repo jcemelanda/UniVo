@@ -1,28 +1,27 @@
 """
 UniVo is a AAC system completely free and open source to provide people wotj tools to inclusive communication
 """
-import os
-import toga
 from toga.style.pack import COLUMN, ROW, Pack
 from toga.constants import WindowState
 from univo.db import get_categories, get_pictograms
-# import pyttsx3  # Para TTS, se quiser adicionar depois
+import os
+import toga
 
 class UniVo(toga.App):
     def startup(self):
-        main_box = toga.Box(direction=COLUMN, padding=10)
+        main_box = toga.Box(direction=COLUMN, style=Pack(margin=10))
 
         # Botões fixos "Sim" e "Não" no topo
         self.pictogram_dir = os.path.join(os.path.dirname(__file__), "resources/pictograms")
         yes_no_box = toga.Box(
             direction=ROW,
             flex=1,
-            style=Pack(padding_bottom=10))
+            style=Pack(margin_bottom=10))
         yes_btn = toga.Button(
             id="yes",
             flex=1, 
             icon=os.path.abspath(os.path.join(self.pictogram_dir, "base/yes.png")), 
-            style=Pack(width=100, padding_right=10), 
+            style=Pack(width=100, margin_right=10), 
             on_press=self.add_word)
         no_btn = toga.Button(
             id='no',
@@ -35,14 +34,14 @@ class UniVo(toga.App):
         main_box.add(yes_no_box)
 
         # Painel de frase construída
-        self.phrase_label = toga.Label("Sentence:", style=Pack(font_size=16, padding_bottom=10))
-        self.phrase_box = toga.Box(direction=ROW, flex=1, style=Pack(padding_bottom=10))
+        self.phrase_label = toga.Label("Sentence:", style=Pack(font_size=16, margin_bottom=10))
+        self.phrase_box = toga.Box(direction=ROW, flex=1, style=Pack(margin_bottom=10))
         main_box.add(self.phrase_label)
         main_box.add(self.phrase_box)
 
         # Categorias
         categories = get_categories()
-        category_box = toga.Box(direction=ROW, flex=2, style=Pack(padding_bottom=10))
+        category_box = toga.Box(direction=ROW, flex=2, style=Pack(margin_bottom=10))
         for cat in categories:
             icon_path = os.path.abspath(os.path.join(self.pictogram_dir, f"{cat}/{cat}.png"))
             btn = toga.Button(
@@ -54,7 +53,7 @@ class UniVo(toga.App):
         main_box.add(category_box)
 
         # Área de símbolos/frases
-        self.symbols_box = toga.Box(direction=ROW, flex=2, style=Pack(padding_bottom=10))
+        self.symbols_box = toga.Box(direction=ROW, flex=2, style=Pack(margin_bottom=10))
         main_box.add(self.symbols_box)
 
         # Botão para falar a frase
