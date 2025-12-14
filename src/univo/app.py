@@ -6,6 +6,7 @@ from toga.constants import WindowState
 from univo.db import get_categories, get_pictograms
 import os
 import toga
+from univo.services import get_services
 
 class UniVo(toga.App):
     def startup(self):
@@ -13,6 +14,8 @@ class UniVo(toga.App):
 
         # Botões fixos "Sim" e "Não" no topo
         self.pictogram_dir = os.path.join(os.path.dirname(__file__), "resources/pictograms")
+        # platform services (tts, clipboard, storage)
+        self.services = get_services()
         yes_no_box = toga.Box(
             direction=ROW,
             flex=1,
@@ -85,14 +88,18 @@ class UniVo(toga.App):
                 flex=1, 
                 icon=icon_path,
                 on_press=self.add_word,
-                style=Pack(padding_right=5)
+                style=Pack(margin_right=5)
             )
             self.symbols_box.add(btn)
 
-    async def speak_phrase(self, widget):
-        # Aqui você pode integrar TTS (ex: pyttsx3)
+    def speak_phrase(self, widget):
+        # build phrase and use platform TTS
         phrase = " ".join([c.text for c in self.phrase_box.children])
-        await self.main_window.dialog(toga.InfoDialog("Falar", phrase))
+        try:
+            self.services.tts.speak(phrase)
+        except Exception:
+            # fallback: show dialog
+            toga.InfoDialog("Falar", phrase).show()
 
 def main():
     return UniVo(icon='resources/icon.png')
