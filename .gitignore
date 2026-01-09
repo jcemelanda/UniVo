@@ -60,3 +60,12 @@ var/
 
 # Briefcase log files
 logs/
+
+.briefcase/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+univo.db
+
+venv/

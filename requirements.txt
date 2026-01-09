@@ -1,0 +1,7 @@
+toga
+textual
+briefcase
+pytest
+pytest-asyncio
+ruff
+mypy

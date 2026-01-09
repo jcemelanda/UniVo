@@ -1,36 +1,75 @@
 # UniVo - Augmentative and Alternative Communication (AAC)
 
-**UniVo** is a system for **Augmentative and Alternative Communication (AAC)**, completely **free**, **open**, and **open source**.  
-Our goal is to ensure that everyone has access to inclusive communication tools, without financial or technological barriers.  
+**UniVo** is a free, open-source communication tool designed to be accessible on every platform. It uses pictograms and text-to-speech (TTS) to empower individuals with communication disabilities.
 
 > 💡 **Communication is a right, not a privilege.**
 
 ---
 
-## 🌍 What is UniVo?
-
-UniVo is an app designed for:  
-- People with speech disabilities or communication difficulties.  
-- Families, caregivers, and healthcare professionals.  
-- Schools and inclusive spaces that need accessible resources.  
-
-It offers **symbols, text, and voice** features to support communication in a simple and accessible way.  
+## 🌍 Key Features
+- **Multi-Platform**: Runs on Desktop (Linux, macOS, Windows), Mobile (Android, iOS), and even the Terminal (TUI).
+- **Category-Based Navigation**: Organize pictograms into folders for quick access.
+- **Fixed Responses**: Persistent "Home", "Yes", and "No" buttons for essential communication.
+- **Dynamic Seeding**: Automatically loads pictograms from the `resources` directory.
 
 ---
 
-## 🛠️ Technologies
+## 🛠️ Architecture
+UniVo is built with a **decoupled architecture**, separating the core domain logic from the user interface:
 
-- **Language/Framework**: [Python](https://www.python.org/) + [BeeWare](https://beeware.org/)  
-- **Database**: SQLite (local and portable, no server required)  
-- **Target Platforms**:  
-  - 🖥️ Desktop: Windows, Linux, macOS  
-  - 📱 Mobile: Android, iOS  
-  - 🌐 Web  
+- **Core Layer**: 
+  - `domain.py`: Entities (Pictogram, Category) using Fluent Python patterns.
+  - `database.py`: SQLite persistence and automatic seeding.
+  - `services.py`: High-level business logic and coordinate between UI and DB.
+- **UI Layer**:
+  - `ui/toga/`: Graphical interface using BeeWare Toga.
+  - `ui/tui/`: Terminal interface using Textual.
 
-> Thanks to BeeWare, UniVo is truly **multiplatform**, with the same code running on all systems.
+---
 
-UniVo is an AAC system, completely free and open source, to provide people with tools for inclusive communication.
+## 🚀 Getting Started
 
-.. _`Briefcase`: https://briefcase.readthedocs.io/
-.. _`The BeeWare Project`: https://beeware.org/
-.. _`becoming a financial member of BeeWare`: https://beeware.org/contributing/membership
+### Prerequisites
+- Python 3.12+
+- `pip`
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/[username]/UniVo.git
+   cd UniVo
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -e .
+   ```
+
+### Running the App
+- **GUI (Toga)**:
+  ```bash
+  python -m univo.main
+  ```
+- **TUI (Terminal)**:
+  ```bash
+  python -m univo.main --ui tui
+  ```
+
+---
+
+## 👩‍💻 Development
+
+### Quality Standards
+We enforce strict coding standards using `ruff` and `mypy`:
+```bash
+ruff check .
+mypy .
+pytest
+```
+
+---
+
+## 🤝 Contributing
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to help improve UniVo.
+
+## 📄 License
+This project is open-source and free for everyone.
