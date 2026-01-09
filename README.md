@@ -36,7 +36,7 @@ UniVo is built with a **decoupled architecture**, separating the core domain log
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/[username]/UniVo.git
+   git clone https://gitlab.com/jcemelanda/UniVo.git
    cd UniVo
    ```
 2. Install dependencies:
@@ -47,7 +47,8 @@ UniVo is built with a **decoupled architecture**, separating the core domain log
 ### Running the App
 - **GUI (Toga)**:
   ```bash
-  python -m univo.main
+  python -m briefcase
+  
   ```
 - **TUI (Terminal)**:
   ```bash
