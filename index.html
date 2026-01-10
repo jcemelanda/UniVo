@@ -1,35 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UniVo - CAA Livre e Aberto</title>
+  <title data-i18n="title">UniVo - Free and Open AAC</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-50 text-gray-900">
 
   <!-- Header -->
   <header class="w-full bg-white shadow">
     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-indigo-600">UniVo</h1>
-      <nav class="space-x-6 hidden md:block">
-        <a href="#sobre" class="hover:text-indigo-600">Sobre</a>
-        <a href="#features" class="hover:text-indigo-600">Recursos</a>
-        <a href="#contato" class="hover:text-indigo-600">Contato</a>
-      </nav>
+      <div class="flex items-center space-x-6">
+        <nav class="space-x-6 hidden md:block">
+          <a href="#sobre" class="hover:text-indigo-600" data-i18n="nav-about">About</a>
+          <a href="#features" class="hover:text-indigo-600" data-i18n="nav-features">Features</a>
+          <a href="#contato" class="hover:text-indigo-600" data-i18n="nav-contact">Contact</a>
+        </nav>
+        <!-- Language Selector -->
+        <div class="relative inline-block text-left">
+          <select id="lang-select"
+            class="bg-white border border-gray-300 text-gray-700 py-1 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer text-sm">
+            <option value="en">English</option>
+            <option value="pt-BR">Português</option>
+          </select>
+        </div>
+      </div>
     </div>
   </header>
+
+  <!-- Announcement -->
+  <div class="bg-indigo-100 border-b border-indigo-200">
+    <div class="max-w-6xl mx-auto px-6 py-2 text-center text-sm text-indigo-800">
+      <span data-i18n="announcement">UniVo has a new home! Our code is now hosted on GitLab.</span>
+      <a href="https://gitlab.com/jcemelanda/UniVo"
+        class="underline font-semibold ml-1 hover:text-indigo-900">GitLab</a>
+    </div>
+  </div>
 
   <!-- Hero -->
   <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-24">
     <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-4xl md:text-6xl font-bold mb-6">Comunicação para todos</h2>
-      <p class="text-lg md:text-xl mb-8">
-        O <strong>UniVo</strong> é um sistema de Comunicação Aumentativa e Alternativa <br>
-        totalmente <strong>gratuito</strong>, <strong>livre</strong> e <strong>open source</strong>.
+      <h2 class="text-4xl md:text-6xl font-bold mb-6" data-i18n="hero-title">Communication for everyone</h2>
+      <p class="text-lg md:text-xl mb-8" data-i18n="hero-subtitle">
+        <strong>UniVo</strong> is an Augmentative and Alternative Communication system <br>
+        that is completely <strong>free</strong>, <strong>open</strong> and <strong>open source</strong>.
       </p>
-      <a href="https://github.com/jcemelanda/UniVo" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-100 transition">
-        Quero acompanhar o projeto
+      <a href="https://github.com/jcemelanda/UniVo"
+        class="bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-100 transition"
+        data-i18n="hero-cta">
+        Follow the project
       </a>
     </div>
   </section>
@@ -37,13 +60,13 @@
   <!-- Sobre -->
   <section id="sobre" class="py-20">
     <div class="max-w-4xl mx-auto px-6 text-center">
-      <h3 class="text-3xl font-bold mb-6">O que é o UniVo?</h3>
-      <p class="text-lg text-gray-700 leading-relaxed">
-        O UniVo nasceu para quebrar barreiras de comunicação. <br>
-        É uma ferramenta de <strong>Comunicação Aumentativa e Alternativa (CAA)</strong> criada para
-        ser <strong>acessível a todos</strong>, sem custos e sem limitações.  
-        Nosso compromisso é com a <strong>inclusão</strong> e a <strong>liberdade</strong>: o código é aberto,
-        colaborativo e pode ser usado por qualquer pessoa, em qualquer lugar.
+      <h3 class="text-3xl font-bold mb-6" data-i18n="about-title">What is UniVo?</h3>
+      <p class="text-lg text-gray-700 leading-relaxed" data-i18n="about-text">
+        UniVo was born to break communication barriers. <br>
+        It is an <strong>Augmentative and Alternative Communication (AAC)</strong> tool created to
+        be <strong>accessible to everyone</strong>, without costs and without limitations.
+        Our commitment is to <strong>inclusion</strong> and <strong>freedom</strong>: the code is open,
+        collaborative, and can be used by anyone, anywhere.
       </p>
     </div>
   </section>
@@ -51,50 +74,98 @@
   <!-- Features -->
   <section id="features" class="bg-gray-100 py-20">
     <div class="max-w-6xl mx-auto px-6">
-      <h3 class="text-3xl font-bold text-center mb-12">Por que escolher o UniVo?</h3>
+      <h3 class="text-3xl font-bold text-center mb-12" data-i18n="features-title">Why choose UniVo?</h3>
       <div class="grid gap-10 md:grid-cols-3 text-center">
         <div class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition">
           <div class="text-indigo-600 text-4xl mb-4">🆓</div>
-          <h4 class="text-xl font-semibold mb-2">Gratuito</h4>
-          <p class="text-gray-600">Nenhum custo, nenhuma barreira. Comunicação deve ser um direito, não um privilégio.</p>
+          <h4 class="text-xl font-semibold mb-2" data-i18n="feature-1-title">Free</h4>
+          <p class="text-gray-600" data-i18n="feature-1-text">No cost, no barriers. Communication should be a right, not
+            a privilege.</p>
         </div>
         <div class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition">
           <div class="text-indigo-600 text-4xl mb-4">💻</div>
-          <h4 class="text-xl font-semibold mb-2">Livre e aberto</h4>
-          <p class="text-gray-600">FOSS de verdade: código aberto, transparente e colaborativo, para todos contribuírem.</p>
+          <h4 class="text-xl font-semibold mb-2" data-i18n="feature-2-title">Libre and Open</h4>
+          <p class="text-gray-600" data-i18n="feature-2-text">True FOSS: open source, transparent and collaborative, for
+            everyone to contribute.</p>
         </div>
         <div class="bg-white p-8 rounded-2xl shadow hover:shadow-lg transition">
           <div class="text-indigo-600 text-4xl mb-4">🌍</div>
-          <h4 class="text-xl font-semibold mb-2">Inclusivo</h4>
-          <p class="text-gray-600">Feito para pessoas, famílias, escolas e profissionais que acreditam no poder da voz.</p>
+          <h4 class="text-xl font-semibold mb-2" data-i18n="feature-3-title">Inclusive</h4>
+          <p class="text-gray-600" data-i18n="feature-3-text">Made for people, families, schools and professionals who
+            believe in the power of voice.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Call to Action 
-  <section id="contato" class="py-20">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <h3 class="text-3xl font-bold mb-6">Participe da comunidade</h3>
-      <p class="text-lg text-gray-700 mb-8">
-        O UniVo é feito de forma aberta. Acompanhe novidades, contribua com ideias ou ajude a construir o futuro da comunicação inclusiva.
-      </p>
-      <form class="flex flex-col md:flex-row gap-4 justify-center">
-        <input type="email" placeholder="Seu e-mail" class="px-4 py-3 rounded-full border border-gray-300 flex-1 focus:ring-2 focus:ring-indigo-500 outline-none">
-        <button class="bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-indigo-700 transition">
-          Inscrever
-        </button>
-      </form>
-      <p class="text-sm text-gray-500 mt-4">
-        Em breve: repositório no GitHub para colaboração aberta 🚀
-      </p>
-    </div>
-  </section> -->
-
   <!-- Footer -->
   <footer class="bg-gray-900 text-gray-400 py-6 text-center">
-    <p>© 2025 UniVo — CAA Livre e FOSS. Todos os direitos reservados.</p>
+    <p data-i18n="footer-text">© 2025 UniVo — Libre and FOSS AAC. All rights reserved.</p>
   </footer>
 
+  <script>
+    const translations = {
+      'en': {
+        'title': 'UniVo - Free and Open AAC',
+        'nav-about': 'About',
+        'nav-features': 'Features',
+        'nav-contact': 'Contact',
+        'hero-title': 'Communication for everyone',
+        'hero-subtitle': '<strong>UniVo</strong> is an Augmentative and Alternative Communication system <br> that is completely <strong>free</strong>, <strong>open</strong> and <strong>open source</strong>.',
+        'hero-cta': 'Follow the project',
+        'about-title': 'What is UniVo?',
+        'about-text': 'UniVo was born to break communication barriers. <br> It is an <strong>Augmentative and Alternative Communication (AAC)</strong> tool created to be <strong>accessible to everyone</strong>, without costs and without limitations. Our commitment is to <strong>inclusion</strong> and <strong>freedom</strong>: the code is open, collaborative, and can be used by anyone, anywhere.',
+        'features-title': 'Why choose UniVo?',
+        'feature-1-title': 'Free',
+        'feature-1-text': 'No cost, no barriers. Communication should be a right, not a privilege.',
+        'feature-2-title': 'Libre and Open',
+        'feature-2-text': 'True FOSS: open source, transparent and collaborative, for everyone to contribute.',
+        'feature-3-title': 'Inclusive',
+        'feature-3-text': 'Made for people, families, schools and professionals who believe in the power of voice.',
+        'footer-text': 'Copyleft © 2025 UniVo — Distributed under the <a href="https://gitlab.com/jcemelanda/UniVo/-/blob/main/LICENSE" class="underline hover:text-white">GPL v3 License</a>.',
+        'announcement': 'UniVo has a new home! Our code is now hosted on GitLab.'
+      },
+      'pt-BR': {
+        'title': 'UniVo - CAA Livre e Aberto',
+        'nav-about': 'Sobre',
+        'nav-features': 'Recursos',
+        'nav-contact': 'Contato',
+        'hero-title': 'Comunicação para todos',
+        'hero-subtitle': 'O <strong>UniVo</strong> é um sistema de Comunicação Aumentativa e Alternativa <br> totalmente <strong>gratuito</strong>, <strong>livre</strong> e <strong>open source</strong>.',
+        'hero-cta': 'Quero acompanhar o projeto',
+        'about-title': 'O que é o UniVo?',
+        'about-text': 'O UniVo nasceu para quebrar barreiras de comunicação. <br> É uma ferramenta de <strong>Comunicação Aumentativa e Alternativa (CAA)</strong> criada para ser <strong>acessível a todos</strong>, sem custos e sem limitações. Nosso compromisso é com a <strong>inclusão</strong> e a <strong>liberdade</strong>: o código é aberto, colaborativo e pode ser usado por qualquer pessoa, em qualquer lugar.',
+        'features-title': 'Por que escolher o UniVo?',
+        'feature-1-title': 'Gratuito',
+        'feature-1-text': 'Nenhum custo, nenhuma barreira. Comunicação deve ser um direito, não um privilégio.',
+        'feature-2-title': 'Livre e aberto',
+        'feature-2-text': 'FOSS de verdade: código aberto, transparente e colaborativo, para todos contribuírem.',
+        'feature-3-title': 'Inclusivo',
+        'feature-3-text': 'Feito para pessoas, famílias, escolas e profissionais que acreditam no poder da voz.',
+        'footer-text': 'Copyleft © 2025 UniVo — Distribuído sob a <a href="https://gitlab.com/jcemelanda/UniVo/-/blob/main/LICENSE" class="underline hover:text-white">Licença GPL v3</a>.',
+        'announcement': 'O UniVo agora está de casa nova! Nosso código agora está hospedado no GitLab.'
+      }
+    };
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      localStorage.setItem('preferred-language', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+      document.getElementById('lang-select').value = lang;
+    }
+
+    const savedLang = localStorage.getItem('preferred-language') || 'en';
+    setLanguage(savedLang);
+
+    document.getElementById('lang-select').addEventListener('change', (e) => {
+      setLanguage(e.target.value);
+    });
+  </script>
 </body>
+
 </html>
