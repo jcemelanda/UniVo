@@ -9,6 +9,7 @@ from typing import Any
 from .database import DatabaseManager
 from .decorators import log_interaction
 from .domain import Category, Pictogram
+from .i18n import _
 from .interfaces import PictogramRepository
 
 
@@ -60,13 +61,13 @@ class PictogramService:
                 pictograms: list[Pictogram] = [
                     Pictogram(
                         id=row["id"],
-                        label=row["label"],
-                        voice_command=row["voice_command"],
+                        label=_(row["id"]), # Use ID as key for gettext
+                        voice_command=_(row["id"]), # Use ID as key for voice as well
                         image_path=row["icon_path"]
                     ) for row in pic_rows
                 ]
                 
-                yield Category(id=cat_id, name=cat_row["name"], pictograms=pictograms)
+                yield Category(id=cat_id, name=_(cat_id), pictograms=pictograms)
 
     def get_main_category(self) -> Category:
         """Deprecated: Use default_category property instead."""
@@ -92,15 +93,15 @@ class PictogramService:
             pictograms = [
                 Pictogram(
                     id=row["id"],
-                    label=row["label"],
-                    voice_command=row["voice_command"],
+                    label=_(row["id"]),
+                    voice_command=_(row["id"]),
                     image_path=row["icon_path"]
                 ) for row in pic_rows
             ]
             
             return Category(
                 id=cat_row["id"], 
-                name=cat_row["name"], 
+                name=_(cat_row["id"]), 
                 pictograms=pictograms
             )
 
@@ -116,8 +117,8 @@ class PictogramService:
             if row:
                 return Pictogram(
                     id=row["id"],
-                    label=row["label"],
-                    voice_command=row["voice_command"],
+                    label=_(row["id"]),
+                    voice_command=_(row["id"]),
                     image_path=row["icon_path"]
                 )
             return None

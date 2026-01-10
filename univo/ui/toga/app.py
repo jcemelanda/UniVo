@@ -9,10 +9,9 @@ from typing import TYPE_CHECKING, Any, cast
 
 import toga
 from toga.style import Pack
-
-# mypy doesn't see these exports easily in some toga versions
 from toga.style.pack import CENTER, COLUMN, ROW  # type: ignore
 
+from univo.core.i18n import _, i18n
 from univo.core.services import PictogramService
 
 if TYPE_CHECKING:
@@ -28,7 +27,7 @@ class UniVoTogaApp(toga.App):
     def startup(self) -> None:
         self.service = PictogramService()
         # MainWindow might be seen as untyped or returning Union
-        self.main_window = cast(Any, toga.MainWindow)(title=self.formal_name)
+        self.main_window = cast(Any, toga.MainWindow)(title=_("UniVo"))
         
         # State: None means home (categories list), otherwise category ID
         self.current_category_id: str | None = None
@@ -44,6 +43,7 @@ class UniVoTogaApp(toga.App):
         # Ensure main_window is treated as Window and not str
         if self.main_window and not isinstance(self.main_window, str):
             self.main_window.content = self.main_box
+            self.main_window.size = (800, 600)
             self.main_window.show()
 
 
@@ -58,30 +58,89 @@ class UniVoTogaApp(toga.App):
         # Base path for resources
         base_path = Path(__file__).parent.parent.parent
         
-        # --- Fixed Top Bar (Always Present) ---
-        fixed_box = toga.Box(
-            style=Pack(direction=ROW, margin_bottom=10, align_items=CENTER)
+        # --- Fixed Top Bar (Improved Header) ---
+        header_box = toga.Box(
+            style=Pack(
+                direction=ROW, 
+                padding=15, 
+                background_color="indigo", 
+                align_items=CENTER
+            )
         )
         
+        # App Title in Header
+        app_title = toga.Label(
+            "UniVo",
+            style=Pack(
+                color="white", 
+                font_size=20, 
+                font_weight="bold", 
+                margin_right=20
+            )
+        )
+        header_box.add(app_title)
+
         # Home/Categories Button
         home_btn = toga.Button(
-            "🏠 Home",
+            _("Home"),
             on_press=self.go_home,
             style=Pack(width=100, margin_right=10)
         )
-        fixed_box.add(home_btn)
+        header_box.add(home_btn)
+
+        # Language Selector
+        langs = sorted(i18n.available_languages)
+        display_names = {"en": "English", "pt": "Português"}
+        selection_items = [display_names.get(code, code.upper()) for code in langs]
+        
+        self.lang_selection = toga.Selection(
+            items=selection_items,
+            on_change=self.change_language,
+            style=Pack(width=120)
+        )
+        # Determine current selection
+        current_display = display_names.get(
+            i18n.current_language, 
+            i18n.current_language.upper()
+        )
+        self.lang_selection.value = current_display
+        header_box.add(self.lang_selection)
+
+        # Spacer to push YES/NO further if needed, but in Toga ROW it's sequential
+        header_box.add(toga.Box(style=Pack(flex=1)))
 
         yes_pic = self.service.get_pictogram_by_id("yes")
-        if yes_pic:
-            fixed_box.add(self.create_pictogram_widget(yes_pic, base_path))
-            
-        fixed_box.add(toga.Box(style=Pack(width=10)))
+        yes_btn = toga.Button(
+            _("yes"),
+            on_press=lambda w: self.create_handler(
+                yes_pic
+            )(w) if yes_pic else None,
+            style=Pack(
+                width=80, 
+                margin_left=10, 
+                background_color="#22c55e", 
+                color="white"
+            )
+        )
+        header_box.add(yes_btn)
         
         no_pic = self.service.get_pictogram_by_id("no")
-        if no_pic:
-            fixed_box.add(self.create_pictogram_widget(no_pic, base_path))
+        no_btn = toga.Button(
+            _("no"),
+            on_press=lambda w: self.create_handler(
+                no_pic
+            )(w) if no_pic else None,
+            style=Pack(
+                width=80, 
+                margin_left=10, 
+                background_color="#ef4444", 
+                color="white"
+            )
+        )
+        header_box.add(no_btn)
             
-        self.main_box.add(fixed_box)
+        self.main_box.add(header_box)
+        # -------------------------
         # -------------------------
 
         grid_content = toga.Box(style=Pack(direction=COLUMN))
@@ -102,19 +161,20 @@ class UniVoTogaApp(toga.App):
 
     def render_home(self, container: toga.Box, base_path: Path) -> None:
         """Displays all categories as interactive folder-like buttons."""
+        title_box = toga.Box(style=Pack(padding=20))
         title = toga.Label(
-            "Categories", 
-            style=Pack(margin_bottom=10, font_size=16, font_weight="bold")
+            _("Categories"), 
+            style=Pack(font_size=24, font_weight="bold", color="indigo")
         )
-        self.main_box.add(title)
+        title_box.add(title)
+        self.main_box.add(title_box)
         
         current_row: toga.Box | None = None
         for i, category in enumerate(self.service.categories):
-            if i % 3 == 0:
-                current_row = toga.Box(style=Pack(direction=ROW, margin=5))
+            if i % 4 == 0:
+                current_row = toga.Box(style=Pack(direction=ROW, padding=10))
                 container.add(current_row)
             
-            # Categories are rendered as special buttons
             widget = self.create_category_widget(category)
             if current_row:
                 current_row.add(widget)
@@ -131,16 +191,18 @@ class UniVoTogaApp(toga.App):
             self.go_home(None) # Go back to home if category not found
             return
 
+        title_box = toga.Box(style=Pack(padding=20))
         title = toga.Label(
-            f"Category: {category.name}", 
-            style=Pack(margin_bottom=10, font_size=16, font_weight="bold")
+            f"{_('Category')}: {category.name}", 
+            style=Pack(font_size=24, font_weight="bold", color="indigo")
         )
-        self.main_box.add(title)
+        title_box.add(title)
+        self.main_box.add(title_box)
         
         current_row: toga.Box | None = None
         for i, pictogram in enumerate(category.pictograms):
-            if i % 3 == 0:
-                current_row = toga.Box(style=Pack(direction=ROW, margin=5))
+            if i % 4 == 0:
+                current_row = toga.Box(style=Pack(direction=ROW, padding=10))
                 container.add(current_row)
             
             widget = self.create_pictogram_widget(pictogram, base_path)
@@ -153,32 +215,39 @@ class UniVoTogaApp(toga.App):
         self.render()
 
     def create_category_widget(self, category: Category) -> toga.Box:
-        """Creates a composite widget for a category.
-        
-        Displays a folder icon button and a label below it.
-        """
-        item_box = toga.Box(
-            style=Pack(direction=COLUMN, margin=5, width=120, align_items=CENTER)
+        """Creates a card-like widget for a category."""
+        card = toga.Box(
+            style=Pack(
+                direction=COLUMN, 
+                padding=10, 
+                width=160, 
+                align_items=CENTER,
+                background_color="#f3f4f6"
+            )
         )
         
         btn = toga.Button(
-            "📂", # Using folder emoji for simplicity
+            "📂", 
             on_press=lambda w: self.select_category(category.id),
-            style=Pack(width=100, height=80, font_size=30)
+            style=Pack(width=140, height=120, font_size=40)
         )
-        item_box.add(btn)
+        card.add(btn)
         
         lbl = toga.Label(
             category.name,
             style=Pack(
-                margin_top=5, 
+                margin_top=10, 
                 text_align=CENTER, 
-                font_size=12, 
-                font_weight="bold"
+                font_size=14, 
+                font_weight="bold",
+                color="#374151"
             )
         )
-
-        item_box.add(lbl)
+        card.add(lbl)
+        
+        # Wrap card for outer spacing
+        item_box = toga.Box(style=Pack(padding=5))
+        item_box.add(card)
         return item_box
 
     def select_category(self, cat_id: str) -> None:
@@ -186,21 +255,36 @@ class UniVoTogaApp(toga.App):
         self.current_category_id = cat_id
         self.render()
 
+    def change_language(self, widget: toga.Selection) -> None:
+        """Language change handler dynamic to available codes."""
+        display_to_code = {
+            "English": "en",
+            "Português": "pt"
+        }
+        val = str(widget.value)
+        new_lang = display_to_code.get(val, val.lower())
+        
+        if i18n.current_language != new_lang:
+            i18n.load_language(new_lang)
+            self.render()
+
 
     def create_pictogram_widget(
         self, 
         pictogram: Pictogram, 
         base_path: Path
     ) -> toga.Box:
-        """Creates a composite widget for a pictogram.
-        
-        Displays the image icon (or label fallback) and a text label below.
-        """
+        """Creates a card-like widget for a pictogram."""
         handler = self.create_handler(pictogram)
         
-        # Container for each item (Button + Label)
-        item_box = toga.Box(
-            style=Pack(direction=COLUMN, margin=5, width=120, align_items=CENTER)
+        card = toga.Box(
+            style=Pack(
+                direction=COLUMN, 
+                padding=10, 
+                width=160, 
+                align_items=CENTER,
+                background_color="white"
+            )
         )
         
         # Resolve Icon Path
@@ -212,31 +296,36 @@ class UniVoTogaApp(toga.App):
             else:
                 print(f"Warning: Icon not found at {full_path}")
         
-        # Create Button (Icon OR Text, not both)
+        # Create Button
         if icon:
-            # Icon button (no text)
             button = toga.Button(
                 icon=icon,
                 on_press=handler,
-                style=Pack(width=100, height=100)
+                style=Pack(width=140, height=140)
             )
         else:
-            # Text fallback button
             button = toga.Button(
                 pictogram.label,
                 on_press=handler,
-                style=Pack(width=100, height=100)
+                style=Pack(width=140, height=140, font_weight="bold")
             )
         
-        item_box.add(button)
+        card.add(button)
         
-        # Label below the button
         lbl = toga.Label(
             pictogram.label, 
-            style=Pack(margin_top=5, text_align=CENTER, font_size=10)
+            style=Pack(
+                margin_top=10, 
+                text_align=CENTER, 
+                font_size=12,
+                color="#1f2937"
+            )
         )
-        item_box.add(lbl)
+        card.add(lbl)
         
+        # Wrap card for outer spacing
+        item_box = toga.Box(style=Pack(padding=5))
+        item_box.add(card)
         return item_box
 
     def create_handler(self, pictogram: Pictogram) -> Callable[[Any], Any]:
@@ -251,12 +340,13 @@ class UniVoTogaApp(toga.App):
             )
             # Placeholder for TTS
             if self.main_window and not isinstance(self.main_window, str):
+                title = _("Pictogram Selected")
+                message = _("You selected: {label}\nVoice: {voice}").format(
+                    label=pictogram.label, 
+                    voice=pictogram.voice_command
+                )
                 await self.main_window.dialog(
-                    toga.InfoDialog(
-                        "Pictogram Selected", 
-                        f"You selected: {pictogram.label}\n"
-                        f"Voice: {pictogram.voice_command}"
-                    )
+                    toga.InfoDialog(title, message)
                 )
 
         return handler

@@ -40,7 +40,8 @@ def service(db_manager: DatabaseManager) -> PictogramService:
 def test_default_category(service: PictogramService) -> None:
     cat = service.default_category
     assert cat.id == "cat1"
-    assert cat.name == "Test Category"
+    # Service now returns the ID through _() which returns the key if no entry exists
+    assert cat.name == "cat1"
 
 def test_categories_generator(service: PictogramService) -> None:
     cats = list(service.categories)
@@ -50,7 +51,7 @@ def test_categories_generator(service: PictogramService) -> None:
 def test_get_pictogram_by_id(service: PictogramService) -> None:
     pic = service["pic1"]
     assert pic is not None
-    assert pic.label == "Test Label"
+    assert pic.label == "pic1"
 
     assert service["nonexistent"] is None
 
@@ -58,7 +59,7 @@ def test_get_pictogram_by_id(service: PictogramService) -> None:
 def test_service_mapping_and_iter(service: PictogramService) -> None:
     cats = list(service)
     assert len(cats) == 1
-    assert cats[0].name == "Test Category"
+    assert cats[0].name == "cat1"
 
 def test_deprecated_methods(service: PictogramService) -> None:
     # Ensure backward compatibility
@@ -66,6 +67,6 @@ def test_deprecated_methods(service: PictogramService) -> None:
     assert cat.id == "cat1"
     pic = service.get_pictogram_by_id("pic1")
     assert pic is not None
-    assert pic.label == "Test Label"
+    assert pic.label == "pic1"
 
 

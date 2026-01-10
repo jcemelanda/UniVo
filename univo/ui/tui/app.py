@@ -7,6 +7,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, ScrollableContainer
 from textual.widgets import Button, Footer, Header, Static
 
+from univo.core.i18n import _, i18n
 from univo.core.services import PictogramService
 
 
@@ -61,7 +62,11 @@ class UniVoTUIApp(App[None]):
 
     """
     
-    BINDINGS = [("d", "toggle_dark", "Toggle dark mode"), ("q", "quit", "Quit")]
+    BINDINGS = [
+        ("d", "toggle_dark", "Toggle dark mode"), 
+        ("l", "toggle_language", "Toggle Language"),
+        ("q", "quit", "Quit")
+    ]
 
     def __init__(self) -> None:
         super().__init__()
@@ -72,9 +77,9 @@ class UniVoTUIApp(App[None]):
         """Defines the initial layout of the application."""
         yield Header()
         with Horizontal(id="fixed-bar"):
-            yield Button("🏠 Home", id="btn-home")
-            yield Button("Sim", id="btn-yes", variant="success")
-            yield Button("Não", id="btn-no", variant="error")
+            yield Button(_("Home"), id="btn-home")
+            yield Button(_("yes"), id="btn-yes", variant="success")
+            yield Button(_("no"), id="btn-no", variant="error")
             
         with ScrollableContainer(id="main-container"):
             yield from self.render_content()
@@ -84,7 +89,7 @@ class UniVoTUIApp(App[None]):
         """Renders the dynamic part of the UI (Home or Category)."""
         if self.current_category_id is None:
             # Home View
-            yield Static("Categories", classes="title")
+            yield Static(_("Categories"), classes="title")
 
             yield Horizontal(
                 *[
@@ -102,7 +107,7 @@ class UniVoTUIApp(App[None]):
             cat_id = self.current_category_id
             category_obj = self.service.get_category_by_id(cat_id)
             if category_obj:
-                yield Static(f"Category: {category_obj.name}", classes="title")
+                yield Static(f"{_('Category')}: {category_obj.name}", classes="title")
                 yield Horizontal(
                     *[
                         Button(pictogram.label, id=f"btn-{pictogram.id}")
@@ -127,14 +132,14 @@ class UniVoTUIApp(App[None]):
             self.current_category_id = button_id.replace("cat-", "")
             await self.refresh_view()
         elif button_id == "btn-yes":
-            self.notify("Selecionado: Sim")
+            self.notify(_("Selected: {label}").format(label=_("yes")))
         elif button_id == "btn-no":
-            self.notify("Selecionado: Não")
+            self.notify(_("Selected: {label}").format(label=_("no")))
         elif button_id.startswith("btn-"):
             pic_id = button_id.replace("btn-", "")
             pictogram = self.service.get_pictogram_by_id(pic_id)
             if pictogram:
-                self.notify(f"Selecionado: {pictogram.label}")
+                self.notify(_("Selected: {label}").format(label=pictogram.label))
 
     async def refresh_view(self) -> None:
         """Clears the main container and re-mounts the current content."""
@@ -145,6 +150,25 @@ class UniVoTUIApp(App[None]):
         
         # Mount new content
         await container.mount_all(list(self.render_content()))
+
+    def action_toggle_language(self) -> None:
+        """Action handler for the 'L' hotkey to cycle through all languages."""
+        langs = sorted(i18n.available_languages)
+        if not langs:
+            return
+            
+        try:
+            current_index = langs.index(i18n.current_language)
+            next_index = (current_index + 1) % len(langs)
+        except ValueError:
+            next_index = 0
+            
+        new_lang = langs[next_index]
+        i18n.load_language(new_lang)
+        self.call_after_refresh(self.refresh_view)
+        # Translating the notification itself is good practice
+        msg = f"Language: {new_lang.upper()}"
+        self.notify(msg)
 
 
 if __name__ == "__main__":

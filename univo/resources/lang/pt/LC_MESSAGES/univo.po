@@ -1,0 +1,113 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UniVo 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-10 00:17-0300\n"
+"PO-Revision-Date: 2026-01-10 00:17-0300\n"
+"Last-Translator: \n"
+"Language-Team: Portuguese\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "UniVo"
+msgstr "UniVo"
+
+msgid "Home"
+msgstr "Início"
+
+msgid "Categories"
+msgstr "Categorias"
+
+msgid "Category"
+msgstr "Categoria"
+
+msgid "Pictogram Selected"
+msgstr "Pictograma Selecionado"
+
+msgid "You selected: {label}\nVoice: {voice}"
+msgstr "Você selecionou: {label}\nVoz: {voice}"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Selected: {label}"
+msgstr "Selecionado: {label}"
+
+# Categories
+msgid "actions"
+msgstr "Ações"
+
+msgid "base"
+msgstr "Base"
+
+msgid "beverages"
+msgstr "Bebidas"
+
+msgid "feelings"
+msgstr "Sentimentos"
+
+msgid "food"
+msgstr "Comida"
+
+msgid "time"
+msgstr "Tempo"
+
+# Pictograms
+msgid "yes"
+msgstr "Sim"
+
+msgid "no"
+msgstr "Não"
+
+msgid "speaker"
+msgstr "Alto-falante"
+
+msgid "eat"
+msgstr "Comer"
+
+msgid "drink"
+msgstr "Beber"
+
+msgid "water"
+msgstr "Água"
+
+msgid "juice"
+msgstr "Suco"
+
+msgid "milk"
+msgstr "Leite"
+
+msgid "happy"
+msgstr "Feliz"
+
+msgid "sad"
+msgstr "Triste"
+
+msgid "angry"
+msgstr "Bravo"
+
+msgid "tired"
+msgstr "Cansado"
+
+msgid "apple"
+msgstr "Maçã"
+
+msgid "bread"
+msgstr "Pão"
+
+msgid "coffee"
+msgstr "Café"
+
+msgid "sleep"
+msgstr "Dormir"
+
+msgid "today"
+msgstr "Hoje"
+
+msgid "tomorrow"
+msgstr "Amanhã"
+
+msgid "yesterday"
+msgstr "Ontem"
