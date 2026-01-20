@@ -1,0 +1,13 @@
+stages:
+  - mirror
+
+mirror_to_github:
+  stage: mirror
+  image: alpine/git
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - git config --global user.name "gitlab-mirror"
+    - git config --global user.email "mirror@gitlab"
+    - git remote add github https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_USER/$GITHUB_REPO.git
+    - git push --mirror github
